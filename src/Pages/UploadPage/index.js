@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import filesize from 'filesize';
 
-// import api from '../../services/api';
+import api from '../../services/api';
 
 import FileList from '../../Components/FileList'; // verificar as pastas
 import Upload from '../../Components/Upload'; // verificar as pastas
@@ -32,7 +32,15 @@ function UploadPage() {
     data.append('file', uploadedFiles[0].file, uploadedFiles[0].name); // ou só data.append('file', uploadedFiles[0].file);
 
     try {
-      // await api.post('/rota_da_api', data);
+      // Colocar a rota aqui
+      api.post('/rota_da_api', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization : "Bearer "+userToken,
+        }
+      }).then(response => {
+        console.log(response)
+      });
       
     } catch (err) {
       throw new Error(err.response.error);
